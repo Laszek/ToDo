@@ -1,0 +1,13 @@
+@import "_variables.scss";
+
+body, 
+html {
+    margin:0;
+}
+
+*,
+*::after,
+*::before {
+box-sizing: border-box;
+}
+

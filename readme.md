@@ -4,16 +4,16 @@
 
     1.1. Header 
         a. tło obrazek
-        b. Tekst początkowy
+   V     b. Tekst początkowy 
         c. menu hamburger
         d. aktualna godzina i data
 
     1.2. Menu 
-        a. Logo
-        b. ustawienia
-        c. profil
-        d. dodaj zadanie
-        e. widok grafiku
+   V     a. Logo
+   V     b. ustawienia
+   V     c. profil
+   V     d. dodaj zadanie
+   V     e. widok grafiku
 
     1.3. Main
         a. Karty dzisiejszych zadań

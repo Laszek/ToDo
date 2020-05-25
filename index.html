@@ -11,12 +11,12 @@
     </head>
     <body>
         <header class="fixed-header">
-            <section class="header__datebox">
+            <time class="header__datebox">
                 <div class="datebox__time">15:10</div>
                 <div class="datebox__date">25.05.2020</div>
-            </section>
+            </time>
             <section class="header__title">
-                <h12>Zadania na dziś:</h1>
+                <h2>Zadania na dziś:</h2>
             </section>
 
             <div class="hamburger__menu">
@@ -29,7 +29,72 @@
         </header>
 
         <nav class="menu">
-            
+             
+
+            <ul class="nav-list">
+                <li class="nav-item">Dodaj zadanie</li>
+                <li class="nav-item">Widok grafiku</li>
+                <li class="nav-item">
+                    <label for="search">Szukaj</label><br>
+                    <input type="text" id="search" class="search" placeholder="tytuł, data(dd-mm-rrrr)">
+                </li>
+            </ul>
+
+            <ul class="nav-list">
+                <li class="nav-item">Profil</li>
+                <li class="nav-item">Ustawienia</li>
+            </ul>
         </nav>
+
+        <main class="main">
+            <section class="active-tasks">
+                <h2 class="active-tasks__title">Aktywne dzisiaj</h2>
+
+                    <div class="task__card">
+                        <div class="task__info">
+                            <div class="task__category"></div>
+                            <div class="task__priority"></div>
+                        </div>
+                        <section class="task__content">
+                            <div class="task__time"><span class="time__from">10:00</span> - <span class="time__to">11:00</span></div>
+                            <h3 class="task__name">Zrobić pranie</h3>
+                            <p class="task__desc">Oddzielić białe od kolorowego<br>
+                                - białe do brudnika<br>
+                                - kolorowe do prania</p>
+                        </section>
+                        <div class="task__tools">
+                            <div class="tools__edit">
+                                <button class="tool show-tools"></button>
+                                <button class="tool btn-edit"></button>
+                                <button class="tool btn-delete"></button>
+                            </div>
+                            <div class="tools_check">
+                                <button class="tool btn-check"></button>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+            <section class="done-tasks">
+                <h2 class="done-tasks__title">Zrobione dzisiaj</h2>
+
+                    <div class="task__card done">
+                        <div class="task__info">
+                            <div class="task__category"></div>
+                            <div class="task__priority"></div>
+                        </div>
+                        <section class="task__content">
+                            <div class="task__time"><span class="time__from">10:00</span> - <span class="time__to">11:00</span></div>
+                            <h3 class="task__name">Zrobić pranie</h3>
+                            <p class="task__desc">Oddzielić białe od kolorowego<br>
+                                - białe do brudnika<br>
+                                - kolorowe do prania</p>
+                        </section>
+                    </div>
+            </section>
+            <div class="btn-add__box"><button class="btn-add"></button></div>
+        </main>
+        <footer class="fixed-footer">
+            <p class="site-name"><span class="name-accent">G</span>et<span class="name-accent">T</span>his<span class="name-accent">D</span>one.pl</p>
+        </footer>
     </body>
 </html>
