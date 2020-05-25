@@ -3,6 +3,7 @@
 body, 
 html {
     margin:0;
+    font-family: $font-main;
 }
 
 *,
@@ -11,3 +12,24 @@ html {
 box-sizing: border-box;
 }
 
+h1 {
+    font-weight: normal;
+}
+
+.site-name {
+    font-family: $font-page-title;
+    .name-accent {
+        color: $color-green;
+    }
+}
+
+.datebox__time, .datebox__date {
+    color: $color-white;
+    font-family: $font-date;
+}
+.datebox__time {
+    font-size: 3rem;
+}
+.datebox__date {
+    font-size: 1.5rem;
+}
