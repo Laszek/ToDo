@@ -8,52 +8,49 @@
 
         <link rel="stylesheet" href="styles/style.css">
         <script defer src="js/app.js"></script>
+
+        <script defer src="js/fonts.js"></script>
     </head>
     <body>
-        <header class="fixed-header">
-            <time class="header__datebox">
-                <div class="datebox__time">15:10</div>
-                <div class="datebox__date">25.05.2020</div>
-            </time>
-            <section class="header__title">
-                <h2>Zadania na dziś:</h2>
-            </section>
-
-            <div class="hamburger__menu">
-                <div class="hamburger__box">
-                    <div class="hamburger__top"></div>
-                    <div class="hamburger__inner"></div>
-                    <div class="hamburger__bottom"></div>
-                </div>
-            </div>
-        </header>
-
         <nav class="menu">
+            <button class="hamburger">
+                <span class="hamburger__box">
+                    <span class="hamburger__inner"></span>
+                </span>
+            </button>
+
             <h1 class="site-name"><span class="name-accent">G</span>et<span class="name-accent">T</span>his<span class="name-accent">D</span>one.pl</h1>
 
             <ul class="nav-list">
-                <li class="nav-item">Dodaj zadanie</li>
-                <li class="nav-item">Widok grafiku</li>
-                <li class="nav-item">
-                    <label for="search">Szukaj</label><br>
-                    <input type="text" id="search" class="search" placeholder="tytuł, data(dd-mm-rrrr)">
-                </li>
+                <li class="nav-item"><button class='menu__btn add'>Dodaj zadanie</button></li>
+                <li class="nav-item"><button class='menu__btn graph'>Widok grafiku</button></li>
+                <li class="nav-item"><form role="search">
+                    <label for="search" class='menu__btn'>Szukaj</label><br>
+                    <input type="search" id="search" class="search" placeholder="tytuł/data(dd-mm-rrrr)" aria-label="Search through site content"><button class="menu__btn search-btn">-></button>
+                </form></li>
             </ul>
 
             <ul class="nav-list">
-                <li class="nav-item">Profil</li>
-                <li class="nav-item">Ustawienia</li>
+                <li class="nav-item"><button class='menu__btn profile'>Ustawienia</button></li>
             </ul>
         </nav>
+        <div class='container'>
+        <header class="fixed-header">
+            <section class="header__datebox">
+                <time class="datebox__time">15:10</time>
+                <time class="datebox__date">25.05.2020</time>
+            </section>
+            <h2 class="header__title">Zadania na dziś:</h2>
+        </header>
 
         <main class="main">
             <section class="active-tasks">
-                <h2 class="active-tasks__title">Aktywne dzisiaj</h2>
+                <h2 class="active-tasks__title">aktywne dzisiaj</h2>
 
-                    <div class="task__card">
+                    <div class="task__card normal">
                         <div class="task__info">
-                            <div class="task__category"></div>
-                            <div class="task__priority"></div>
+                            <div class="task__category"><span class="">X</span></div>
+                            <div class="task__priority"><span class="">D</span></div>
                         </div>
                         <section class="task__content">
                             <div class="task__time"><span class="time__from">10:00</span> - <span class="time__to">11:00</span></div>
@@ -64,23 +61,20 @@
                         </section>
                         <div class="task__tools">
                             <div class="tools__edit">
-                                <button class="tool show-tools"></button>
-                                <button class="tool btn-edit"></button>
-                                <button class="tool btn-delete"></button>
+                                <button class="tool show-tools fas fa-angle-right fa-2x fa-rotate-180"></button>
+                                <button class="tool btn-edit fas fa-edit fa-2x"></button>
+                                <button class="tool btn-delete fas fa-trash fa-2x"></button>
                             </div>
-                            <div class="tools_check">
-                                <button class="tool btn-check"></button>
+                            <div class="tools__check">
+                                <button class="tool btn-check fas fa-clipboard-check fa-2x"></button>
                             </div>
                         </div>
                     </div>
-            </section>
-            <section class="done-tasks">
-                <h2 class="done-tasks__title">Zrobione dzisiaj</h2>
-
-                    <div class="task__card done">
+                    
+                    <div class="task__card important">
                         <div class="task__info">
-                            <div class="task__category"></div>
-                            <div class="task__priority"></div>
+                            <div class="task__category"><span class="">X</span></div>
+                            <div class="task__priority"><span class="">D</span></div>
                         </div>
                         <section class="task__content">
                             <div class="task__time"><span class="time__from">10:00</span> - <span class="time__to">11:00</span></div>
@@ -89,12 +83,48 @@
                                 - białe do brudnika<br>
                                 - kolorowe do prania</p>
                         </section>
+                        <div class="task__tools">
+                            <div class="tools__edit">
+                                <button class="tool show-tools fas fa-angle-right fa-2x fa-rotate-180"></button>
+                                <button class="tool btn-edit fas fa-edit fa-2x"></button>
+                                <button class="tool btn-delete fas fa-trash fa-2x"></button>
+                            </div>
+                            <div class="tools__check">
+                                <button class="tool btn-check fas fa-clipboard-check fa-2x"></button>
+                            </div>
+                        </div>
                     </div>
             </section>
-            <div class="btn-add__box"><button class="btn-add"></button></div>
+            <section class="done-tasks">
+                <h2 class="done-tasks__title">Zrobione dzisiaj</h2>
+
+                <div class="task__card important done">
+                    <div class="task__info">
+                        <div class="task__category"><span class="">X</span></div>
+                        <div class="task__priority"><span class="">D</span></div>
+                    </div>
+                    <section class="task__content">
+                        <div class="task__time"><span class="time__from">10:00</span> - <span class="time__to">11:00</span></div>
+                        <h3 class="task__name">Zrobić pranie</h3>
+                        <p class="task__desc">Oddzielić białe od kolorowego<br>
+                            - białe do brudnika<br>
+                            - kolorowe do prania</p>
+                    </section>
+                    <div class="task__tools">
+                        <div class="tools__edit">
+                            <button class="tool btn-delete"><i class="fas fa-trash fa-3x"></i></button>
+                        </div>
+                        <div class="tools__check">
+                            <button class="tool btn-uncheck"><i class="fas fa-minus-square fa-3x"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="btn-add__box"><button class="btn-add fas fa-plus fa-3x"></button></div>
         </main>
         <footer class="fixed-footer">
             <p class="site-name"><span class="name-accent">G</span>et<span class="name-accent">T</span>his<span class="name-accent">D</span>one.pl</p>
         </footer>
+    </div>
     </body>
 </html>

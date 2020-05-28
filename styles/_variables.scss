@@ -3,8 +3,18 @@
 $color-grey: #656565;
 $color-white: #fff;
 $color-black: #000;
-$color-green: #4A8A5F;
+$color-green: #02C39A;
+$color-check: rgb(87, 255, 95);
+$color-delete: rgb(255, 89, 89);
+$color-edit: rgb(255, 195, 67);
 
 $font-date: "Quicksand";
 $font-main: "Lato";
 $font-page-title: "Righteous";
+
+@mixin center() {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
