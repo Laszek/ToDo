@@ -1,21 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Quicksand:wght@400;700&family=Righteous&display=swap");
-.menu {
+.menu, .new-form {
   position: absolute;
   top: 0;
-  right: 0;
   background: #fff;
   height: 100vh;
   width: 80%;
   padding: 0 1em;
   text-align: center;
-  box-shadow: -2px 0px 10px 2px #000;
-  transform: translateX(103%);
   transition: transform .3s .1s ease-in-out;
   z-index: 202; }
-  .menu .site-name {
+  .menu .site-name, .new-form .site-name {
     font-size: 2rem;
     border-bottom: 1px solid grey;
     padding: 0 0 .4em 0; }
+
+.menu {
+  right: 0;
+  border-left: 1px solid #414141;
+  transform: translateX(100%); }
+
+.new-form {
+  left: 0;
+  border-right: 1px solid #414141;
+  transform: translateX(-100%); }
 
 .nav-list {
   list-style: none;
@@ -192,7 +199,7 @@ h1 {
   color: #fff;
   margin: .5em auto;
   max-width: 70%;
-  text-shadow: 1px 1px 10px #343434; }
+  text-shadow: 1px 1px 10px #414141; }
 
 .main {
   max-height: 80vh;
@@ -200,15 +207,15 @@ h1 {
   padding: 1em; }
 
 .active-tasks__title, .done-tasks__title {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid #414141;
   width: 80%;
   padding-bottom: 10px;
   margin: 1em 0;
-  color: grey;
+  color: #414141;
   font-size: 1rem; }
 
 .task__card {
-  box-shadow: 1px 2px 8px 3px grey;
+  box-shadow: 1px 2px 8px 3px #414141;
   border-radius: 5px;
   position: relative;
   display: flex;
@@ -233,7 +240,7 @@ h1 {
   margin-right: 2em;
   z-index: 120; }
   .task__info .task__category, .task__info .task__priority {
-    color: grey;
+    color: #414141;
     font-weight: bold;
     font-size: 1.5rem; }
 
@@ -268,7 +275,7 @@ h1 {
   padding: .5em;
   background: #fff;
   width: auto;
-  box-shadow: 0px 0px 12px 2px grey; }
+  box-shadow: 0px 0px 12px 2px #414141; }
 
 .tools__edit {
   position: absolute;
@@ -332,14 +339,15 @@ h1 {
   background: #cacaca; }
 
 .important {
-  background: #ffd95e; }
+  background: #ffc343; }
 
 .very-important {
-  background: #ff5c5c; }
+  background: #ff5959; }
 
 .btn-add {
   position: absolute;
-  left: 0;
+  right: 0;
+  transform: translate(100%);
   bottom: .6em;
   z-index: 125;
   background: white;

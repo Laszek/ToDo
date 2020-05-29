@@ -1,17 +1,17 @@
 const hamburger = document.querySelector('.hamburger');
 const nav = document.querySelector('.menu');
-const container = document.querySelector('.container');
 
-const handleClick = () => {
+const handleClick = (hamburger, nav) => {
   hamburger.classList.toggle('hamburger--active');
   nav.classList.toggle('menu--active');
-  container.removeEventListener('click', handleClick);
-  if(hamburger.classList.contains('hamburger--active')){
-    container.addEventListener('click', handleClick);
-  }
 }
 
-hamburger.addEventListener('click', handleClick);
+hamburger.addEventListener('click', () => handleClick(hamburger, nav) );
+
+const addBtn = document.querySelector('.btn-add');
+const addForm = document.querySelector('.new-form');
+
+addBtn.addEventListener('click', () => handleClick(addBtn, addForm) );
 
 //Marking up done tasks
 const doneTasks = document.getElementsByClassName("done");
