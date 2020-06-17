@@ -24,6 +24,13 @@ box-sizing: border-box;
     left:0;
 }
 
+.center{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 h1 {
     font-weight: normal;
 }
@@ -269,12 +276,16 @@ h1 {
     border: 1px solid black;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    padding:.3em;
+    padding:1em;
     color: $color-green;
     cursor: pointer;
     opacity:.7;
 
     transition: color .3s, background .3s;
+}
+
+.btn-add .fas {
+    transition: transform .4s;
 }
 
 .btn-add:hover {
@@ -286,6 +297,25 @@ h1 {
 .btn-add:focus {
     background: $color-green;
     color: white;
+}
+
+.hideCont {
+    position: absolute;
+    height:100vh;
+    width:100vw;
+    display:none;
+}
+.btn-add .hideCont {
+    bottom: -0.6em;
+    left:0;
+}
+
+.hamburger .hideCont {
+    top:0;
+    right:0;
+}
+.hideCont:focus {
+    outline: 0px;
 }
 
 .fixed-footer{
@@ -304,4 +334,66 @@ h1 {
         margin:.4em;
         font-size:1.3rem;
     }
+}
+
+.addTask {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup__box {
+    position: absolute;
+    width:100vw;
+    height:100vh;
+    top:0;
+    left:0;
+    z-index:999;
+    transform: scale(0);
+    display:flex;
+    transition: transform .5s ease;
+}
+.popup__box--active{
+    transform: scale(1);
+}
+.popup__frame {
+    background-color: $color-white;
+    min-width:400px;
+    max-width:90%;
+    min-height:250px;
+    border: 1px solid $color-grey;
+    border-radius: 5px;
+}
+
+.popup__text {
+    font-size:1.5em;
+    font-weight: bold;
+    max-width:90%;
+    text-align: center;
+    
+}
+
+.popup__buttons {
+    border:0;
+
+}
+.popup__buttons .menu__btn + .menu__btn {
+    margin-left:2em;
+}
+
+.btn--yes {
+    filter: drop-shadow(5px 5px 6px $color-green);
+}
+
+.btn--no {
+    filter: drop-shadow(5px 5px 6px $color-delete);
+}
+
+.btn--yes:hover {
+    filter: drop-shadow(5px 5px 8px $color-green);
+}
+
+.btn--no:hover {
+    filter: drop-shadow(5px 5px 8px $color-delete);
 }

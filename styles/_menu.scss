@@ -33,13 +33,17 @@
     padding:0;
 }
 
-.menu__btn {
+.menu__btn{
     font-size: 1.7rem;
     font-weight: bold;
     font-family: $font-main;
     background: none;
     border:0;
     cursor: pointer;
+}
+
+.menu__btn:hover {
+  filter: drop-shadow(5px 5px 6px $color-green);
 }
 
 .add {
@@ -131,6 +135,14 @@
   
   .hamburger--active .hamburger__inner:after {
     transform: translateY(-10px) rotate(-45deg);
+  }
+
+  .hamburger--active .hideCont {
+    display:block;
+  }
+
+  .hamburger--active.btn-add .fas{
+    transform: rotate(45deg);
   }
 
   .menu--active {

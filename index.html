@@ -5,10 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 
         <title>GetThisDone.pl</title>
+        
+        <link href="vanillajs-datepicker-master/dist/css/datepicker.min.css" rel="stylesheet">
+        <script src="vanillajs-datepicker-master/dist/js/datepicker-full.min.js"></script>
 
         <link rel="stylesheet" href="styles/style.css">
         <script defer src="js/app.js"></script>
         <script defer src="js/fonts.js"></script>
+
     </head>
     <body>
         <nav class="menu">
@@ -16,6 +20,7 @@
                 <span class="hamburger__box">
                     <span class="hamburger__inner"></span>
                 </span>
+                <div class='hideCont'></div>
             </button>
 
             <h1 class="site-name"><span class="name-accent">G</span>et<span class="name-accent">T</span>his<span class="name-accent">D</span>one.pl</h1>
@@ -70,29 +75,6 @@
                         </div>
                     </div>
                     
-                    <div class="task__card important">
-                        <div class="task__info">
-                            <div class="task__category"><span class="">X</span></div>
-                            <div class="task__priority"><span class="">D</span></div>
-                        </div>
-                        <section class="task__content">
-                            <div class="task__time"><span class="time__from">10:00</span> - <span class="time__to">11:00</span></div>
-                            <h3 class="task__name">Zrobić pranie</h3>
-                            <p class="task__desc">Oddzielić białe od kolorowego<br>
-                                - białe do brudnika<br>
-                                - kolorowe do prania</p>
-                        </section>
-                        <div class="task__tools">
-                            <div class="tools__edit">
-                                <button class="tool show-tools fas fa-angle-right fa-2x fa-rotate-180"></button>
-                                <button class="tool btn-edit fas fa-edit fa-2x"></button>
-                                <button class="tool btn-delete fas fa-trash fa-2x"></button>
-                            </div>
-                            <div class="tools__check">
-                                <button class="tool btn-check fas fa-clipboard-check fa-2x"></button>
-                            </div>
-                        </div>
-                    </div>
             </section>
             <section class="done-tasks">
                 <h2 class="done-tasks__title">Zrobione dzisiaj</h2>
@@ -125,8 +107,32 @@
         </footer>
     </div>
     <section class="new-form">
-        <button class="btn-add fas fa-plus fa-3x"></button>
+        <button class="btn-add"><i class="fas fa-plus fa-3x"></i><div class='hideCont'></div></button>
         <h1 class="site-name"><span class="name-accent">G</span>et<span class="name-accent">T</span>his<span class="name-accent">D</span>one.pl</h1>
+
+        <form name="addTask" class="addTask">
+            <label for="newTask--title" class="addTask--label">Tytuł zadania</label>
+            <input type="text" id="newTask--title" placeholder="Title" class="search">
+
+            <label for="newTask--description" class="addTask--label">Opis zadania</label>
+            <textarea id="newTask--description" placeholder="Description" class="search"></textarea>
+            <pre id='xd'></pre>
+
+            <label for="newTask--date" class="addTask--label">Data zadania</label>
+            <input type="text" name='newTaskDate' id="newTask--date" placeholder="Date" class="search">
+        </form>
     </section>
+
+    <div class='popup__box center'>
+        <div class="popup__frame center">
+            <p class="popup__text">
+                Czy na pewno chcesz usunąć zadanie?
+            </p>
+            <fieldset class='popup__buttons'>
+                <button class='menu__btn btn--yes'>Tak</button>
+                <button class='menu__btn btn--no'>Nie</button>
+            </fieldset>
+        </div>
+    </div>
     </body>
 </html>
