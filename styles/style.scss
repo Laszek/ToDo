@@ -129,25 +129,25 @@ h1 {
     overflow: hidden;
     margin: 1.5em auto;
     max-width:600px;
+    min-height:120px;
 }
 
 .task__info {
     position: relative;
     background: $color-white;
     box-shadow: 2px 4px 8px 3px $color-green;
-    height:100px;
-    width: 50px;
+    height:80px;
+    width: 40px;
     border-top-left-radius: 5px;
     border-bottom-right-radius: 15px;
     @include center;
     align-items: center;
-    margin-right:2em;
+    margin-right:1.2em;
     z-index:120;
 
     .task__category, .task__priority {
         color: $color-grey;
         font-weight: bold;
-        font-size:1.5rem;
         
     }
 }
@@ -169,11 +169,12 @@ h1 {
         }
     }
     .task__name {
-        font-size:2rem;
+        font-size:1.5rem;
         margin: .3em 0;
     }
     .task__desc {
         color: $color-grey;
+        font-size:.8rem;
     }
 }
 
@@ -187,7 +188,7 @@ h1 {
     z-index:120;
 }
 .tools__edit, .tools__check {
-    padding:.5em;
+    padding:.3em .5em;
     background: $color-white;
     width:auto;
     box-shadow: 0px 0px 12px 2px $color-grey;

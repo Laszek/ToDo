@@ -171,15 +171,16 @@ class Task {
 
 const task1 = new Task("Zrobić pranie", "60 stopni wirowanie", "10:00", "10/06/2020", "normal", "house", false);
 const task2 = new Task("Zrobić pranie", "60 stopni wirowanie", "10:00", "10/06/2020", "normal", "house", false);
+const taskArr = [task1, task2];
 
 task2.createTask();
 
 const elem = document.querySelector('#newTask--date');
 const datepicker = new Datepicker(elem);
 
-localStorage.setItem("task1", JSON.stringify(task1));
+localStorage.setItem("tasks", JSON.stringify(taskArr));
 
-const taskStorage = JSON.parse(localStorage.getItem("task1"));
-const storageTask = new Task(taskStorage.title, taskStorage.description, taskStorage.time, taskStorage.date, taskStorage.priority, taskStorage.category, taskStorage.isDone);
-console.log(storageTask);
+const taskStorage = JSON.parse(localStorage.getItem("tasks"));
+const storageTask = new Task(taskStorage[0].title, taskStorage[0].description, taskStorage[0].time, taskStorage[0].date, taskStorage[0].priority, taskStorage[0].category, taskStorage[0].isDone);
+console.log(taskStorage);
 storageTask.createTask();
