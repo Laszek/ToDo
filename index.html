@@ -111,15 +111,28 @@
         <h1 class="site-name"><span class="name-accent">G</span>et<span class="name-accent">T</span>his<span class="name-accent">D</span>one.pl</h1>
 
         <form name="addTask" class="addTask">
-            <label for="newTask--title" class="addTask--label">Tytuł zadania</label>
-            <input type="text" id="newTask--title" placeholder="Title" class="search">
-
-            <label for="newTask--description" class="addTask--label">Opis zadania</label>
-            <textarea id="newTask--description" placeholder="Description" class="search"></textarea>
-            <pre id='xd'></pre>
-
-            <label for="newTask--date" class="addTask--label">Data zadania</label>
-            <input type="text" name='newTaskDate' id="newTask--date" placeholder="Date" class="search">
+            <fieldset class='fieldset'>
+                <label for="newTask--title" class="addTask--label">Tytuł zadania</label>
+                <input type="text" id="newTask--title" placeholder="Title" class="search">
+            </fieldset>
+            <fieldset class='fieldset'>
+                <label for="newTask--description" class="addTask--label">Opis zadania</label>
+                <textarea id="newTask--description" placeholder="Description" class="search"></textarea>
+            </fieldset>
+            <fieldset class='fieldset'>
+                <label for="newTask--date" class="addTask--label">Data zadania</label>
+                <input type="text" name='newTaskDate' id="newTask--date" placeholder="Date" class="search">
+            </fieldset>
+            <fieldset class='fieldset'>
+                <p class="addTask--label">Kategoria</p>
+                <div class='category--radio__box'>
+                    <div><input name='Category' type="radio" id="newTask--category--home" class="category--radio" value="home"><label for="newTask--category--home"><div class="radio--btn">H</div></label></div>
+                    <div><input name='Category' type="radio" id="newTask--category--work" class="category--radio" value="work"><label for="newTask--category--work"><div class="radio--btn">W</div></label></div>
+                    <div><input name='Category' type="radio" id="newTask--category--school" class="category--radio" value="school"><label for="newTask--category--school"><div class="radio--btn">S</div></label></div>
+                    <div><input name='Category' type="radio" id="newTask--category--car" class="category--radio" value="car"><label for="newTask--category--car"><div class="radio--btn">C</div></label></div>
+                    <div><input name='Category' type="radio" id="newTask--category--other" class="category--radio" value="other"><label for="newTask--category--other"><div class="radio--btn">O</div></label></div>
+                </div>
+            </fieldset>
         </form>
     </section>
 

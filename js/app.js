@@ -16,17 +16,7 @@ addBtn.addEventListener('click', () => handleClick(addBtn, addForm) );
 
 
 
-//Marking up done tasks
-const doneTasks = document.getElementsByClassName("done");
 
-const doneCheck = document.createElement('div');
-doneCheck.classList += "done__check";
-doneCheck.innerHTML += "<i class='far fa-check-circle fa-7x'></i>";
-
-for (let item of doneTasks) {
-  let newChild = doneCheck.cloneNode(true);
-  item.append(newChild);
-}
 
 //Setting up time
 
@@ -131,7 +121,7 @@ class Task {
     taskDesc.classList += "task__desc";
     taskDesc.innerHTML = this.description;
     taskContent.append(taskDesc);
-
+    
     const taskTools = document.createElement('div');
     taskTools.classList += "task__tools";
     taskContainer.append(taskTools);
@@ -164,14 +154,27 @@ class Task {
     taskCheckBtn.addEventListener('click', this.checkTask);
     taskCheck.append(taskCheckBtn);
 
-    const main = document.getElementsByClassName("active-tasks")[0];
+    let main;
+
+    if(this.isDone == true){
+      taskContainer.classList += " done";
+      main = document.getElementsByClassName("done-tasks")[0];
+    }else
+      main = document.getElementsByClassName("active-tasks")[0];
+
     main.append(taskContainer);
   };
 }
 
-const task1 = new Task("Zrobić pranie", "60 stopni wirowanie", "10:00", "10/06/2020", "normal", "house", false);
+Task.prototype.getTitle = ()=>{
+  return `${this.title}`;
+}
+
+const task1 = new Task("Zrobić pranie", "60 stopni wirowanie", "10:00", "10/06/2020", "normal", "house", true);
 const task2 = new Task("Zrobić pranie", "60 stopni wirowanie", "10:00", "10/06/2020", "normal", "house", false);
 const taskArr = [task1, task2];
+
+console.log(task1.getTitle());
 
 task2.createTask();
 
@@ -184,3 +187,18 @@ const taskStorage = JSON.parse(localStorage.getItem("tasks"));
 const storageTask = new Task(taskStorage[0].title, taskStorage[0].description, taskStorage[0].time, taskStorage[0].date, taskStorage[0].priority, taskStorage[0].category, taskStorage[0].isDone);
 console.log(taskStorage);
 storageTask.createTask();
+
+
+//Marking up done tasks
+(function markDoneTask(){
+const doneTasks = document.getElementsByClassName("done");
+
+const doneCheck = document.createElement('div');
+doneCheck.classList += "done__check";
+doneCheck.innerHTML += "<i class='far fa-check-circle fa-7x'></i>";
+
+for (let item of doneTasks) {
+  let newChild = doneCheck.cloneNode(true);
+  item.append(newChild);
+}
+})();
