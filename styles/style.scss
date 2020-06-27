@@ -53,7 +53,7 @@ h1 {
     padding: 0 1em 1em 1em;
     height:auto;
     box-shadow: 0px 3px 8px 3px $color-green;
-    z-index:100;
+    z-index:200;
 }
 
 .fixed-header::before {
@@ -104,6 +104,16 @@ h1 {
     max-width:70%;
     text-shadow: 1px 1px 10px $color-grey;
 }
+.filter--date {
+    background: none;
+    border: 0;
+    border-bottom: 1px solid white;
+    font-size: inherit;
+    width:5.1em;
+    color:white;
+    font-weight: bold;
+    text-shadow: 1px 1px 10px $color-grey;
+}
 
 .main {
     max-height:80vh;
@@ -128,6 +138,7 @@ h1 {
     flex-direction: row;
     overflow: hidden;
     margin: 1.5em auto;
+    min-width:300px;
     max-width:600px;
     min-height:120px;
 }
@@ -136,10 +147,8 @@ h1 {
     position: relative;
     background: $color-white;
     box-shadow: 2px 4px 8px 3px $color-green;
-    height:80px;
-    width: 40px;
     border-top-left-radius: 5px;
-    border-bottom-right-radius: 15px;
+    width: 50px;
     @include center;
     align-items: center;
     margin-right:1.2em;
@@ -153,17 +162,19 @@ h1 {
 }
 
 .task__content{
-
+    min-width:180px;
+    max-width: 60%;
     .task__time {
         color:rgb(65, 65, 65);
         font-family: $font-date;
         position: relative;
+        width:180px;
         &::after{
             content:"";
             position: absolute;
             top:0;
             left:0;
-            width:50%;
+            width:80%;
             height:100%;
             border-bottom: 1px solid rgb(65, 65, 65);
         }
@@ -262,7 +273,7 @@ h1 {
     background: $color-edit;
 }
 
-.very-important {
+.v-important {
     background: $color-delete;
 }
 

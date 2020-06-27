@@ -17,6 +17,10 @@
     border-bottom: 1px solid grey;
     padding: 0 0 .4em 0; }
 
+.form__container {
+  overflow-y: auto;
+  height: 80%; }
+
 .menu {
   right: 0;
   border-left: 1px solid #414141;
@@ -48,14 +52,14 @@
 .add {
   color: #02C39A; }
 
-.search {
+.search, .addTask--submit {
   height: 40px;
-  width: 80%;
+  width: 100%;
   max-width: 250px;
   font-family: "Quicksand";
   font-size: .9rem;
   margin: .5em 0;
-  padding-left: .5em;
+  padding: .5em;
   border: 0;
   border-bottom: 1px solid grey;
   border-radius: 15px; }
@@ -144,7 +148,20 @@
           transform: translateX(0px); }
 
 .fieldset {
-  border: 0; }
+  border: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
 
 .category--radio {
   position: absolute;
@@ -159,6 +176,7 @@
   border: 1px solid black;
   border-radius: 100%;
   cursor: pointer;
+  background: transparent;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -174,12 +192,30 @@
           flex-direction: column; }
 
 .category--radio:checked + label .radio--btn {
-  -webkit-box-shadow: 0px 0px 8px #02C39A;
-          box-shadow: 0px 0px 8px #02C39A; }
+  -webkit-box-shadow: 0px 0px 8px 2px #02C39A;
+          box-shadow: 0px 0px 8px 2px #02C39A; }
 
 .category--radio__box {
   display: grid;
   grid-template-columns: auto auto auto; }
+
+.addTask--submit {
+  height: auto;
+  width: auto;
+  padding: .3em 1em;
+  font-size: 1.5rem;
+  background: #02C39A;
+  color: #fff;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s; }
+
+.addTask--submit:hover {
+  background: #02cda2;
+  cursor: pointer;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1); }
 
 body,
 html {
@@ -250,7 +286,7 @@ h1 {
   height: auto;
   -webkit-box-shadow: 0px 3px 8px 3px #02C39A;
           box-shadow: 0px 3px 8px 3px #02C39A;
-  z-index: 100; }
+  z-index: 200; }
 
 .fixed-header::before {
   content: '';
@@ -298,6 +334,16 @@ h1 {
   max-width: 70%;
   text-shadow: 1px 1px 10px #414141; }
 
+.filter--date {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid white;
+  font-size: inherit;
+  width: 5.1em;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 10px #414141; }
+
 .main {
   max-height: 80vh;
   overflow-y: auto;
@@ -325,6 +371,7 @@ h1 {
           flex-direction: row;
   overflow: hidden;
   margin: 1.5em auto;
+  min-width: 300px;
   max-width: 600px;
   min-height: 120px; }
 
@@ -333,10 +380,8 @@ h1 {
   background: #fff;
   -webkit-box-shadow: 2px 4px 8px 3px #02C39A;
           box-shadow: 2px 4px 8px 3px #02C39A;
-  height: 80px;
-  width: 40px;
   border-top-left-radius: 5px;
-  border-bottom-right-radius: 15px;
+  width: 50px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -357,24 +402,28 @@ h1 {
     color: #414141;
     font-weight: bold; }
 
-.task__content .task__time {
-  color: #414141;
-  font-family: "Quicksand";
-  position: relative; }
-  .task__content .task__time::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 100%;
-    border-bottom: 1px solid #414141; }
-.task__content .task__name {
-  font-size: 1.5rem;
-  margin: .3em 0; }
-.task__content .task__desc {
-  color: #414141;
-  font-size: .8rem; }
+.task__content {
+  min-width: 180px;
+  max-width: 60%; }
+  .task__content .task__time {
+    color: #414141;
+    font-family: "Quicksand";
+    position: relative;
+    width: 180px; }
+    .task__content .task__time::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 80%;
+      height: 100%;
+      border-bottom: 1px solid #414141; }
+  .task__content .task__name {
+    font-size: 1.5rem;
+    margin: .3em 0; }
+  .task__content .task__desc {
+    color: #414141;
+    font-size: .8rem; }
 
 .task__tools {
   position: absolute;
@@ -491,7 +540,7 @@ h1 {
 .important {
   background: #ffc343; }
 
-.very-important {
+.v-important {
   background: #ff5959; }
 
 .btn-add {

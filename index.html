@@ -10,6 +10,7 @@
         <script src="vanillajs-datepicker-master/dist/js/datepicker-full.min.js"></script>
 
         <link rel="stylesheet" href="styles/style.css">
+        <script defer src="js/tasks.js"></script>
         <script defer src="js/app.js"></script>
         <script defer src="js/fonts.js"></script>
 
@@ -41,15 +42,16 @@
         <div class='container'>
         <header class="fixed-header">
             <section class="header__datebox">
-                <time class="datebox__time">15:10</time>
-                <time class="datebox__date">25.05.2020</time>
+                <time class="datebox__time"></time>
+                <time class="datebox__date"></time>
             </section>
-            <h2 class="header__title">Zadania na dziś:</h2>
+            <h2 class="header__title">Zadania na <br>
+                <input type="text" name='datepicker' class="filter--date">:</h2>
         </header>
 
         <main class="main">
             <section class="active-tasks">
-                <h2 class="active-tasks__title">aktywne dzisiaj</h2>
+                <h2 class="active-tasks__title">aktywne <span class="current-date">dzisiaj</span></h2>
 
                     <div class="task__card normal">
                         <div class="task__info">
@@ -77,7 +79,7 @@
                     
             </section>
             <section class="done-tasks">
-                <h2 class="done-tasks__title">Zrobione dzisiaj</h2>
+                <h2 class="done-tasks__title">Zrobione <span class="current-date">dzisiaj</span></h2>
 
                 <div class="task__card important done">
                     <div class="task__info">
@@ -109,31 +111,47 @@
     <section class="new-form">
         <button class="btn-add"><i class="fas fa-plus fa-3x"></i><div class='hideCont'></div></button>
         <h1 class="site-name"><span class="name-accent">G</span>et<span class="name-accent">T</span>his<span class="name-accent">D</span>one.pl</h1>
-
-        <form name="addTask" class="addTask">
-            <fieldset class='fieldset'>
-                <label for="newTask--title" class="addTask--label">Tytuł zadania</label>
-                <input type="text" id="newTask--title" placeholder="Title" class="search">
-            </fieldset>
-            <fieldset class='fieldset'>
-                <label for="newTask--description" class="addTask--label">Opis zadania</label>
-                <textarea id="newTask--description" placeholder="Description" class="search"></textarea>
-            </fieldset>
-            <fieldset class='fieldset'>
-                <label for="newTask--date" class="addTask--label">Data zadania</label>
-                <input type="text" name='newTaskDate' id="newTask--date" placeholder="Date" class="search">
-            </fieldset>
-            <fieldset class='fieldset'>
-                <p class="addTask--label">Kategoria</p>
-                <div class='category--radio__box'>
-                    <div><input name='Category' type="radio" id="newTask--category--home" class="category--radio" value="home"><label for="newTask--category--home"><div class="radio--btn">H</div></label></div>
-                    <div><input name='Category' type="radio" id="newTask--category--work" class="category--radio" value="work"><label for="newTask--category--work"><div class="radio--btn">W</div></label></div>
-                    <div><input name='Category' type="radio" id="newTask--category--school" class="category--radio" value="school"><label for="newTask--category--school"><div class="radio--btn">S</div></label></div>
-                    <div><input name='Category' type="radio" id="newTask--category--car" class="category--radio" value="car"><label for="newTask--category--car"><div class="radio--btn">C</div></label></div>
-                    <div><input name='Category' type="radio" id="newTask--category--other" class="category--radio" value="other"><label for="newTask--category--other"><div class="radio--btn">O</div></label></div>
-                </div>
-            </fieldset>
-        </form>
+        <div class="form__container">
+            <form name="addTask" class="addTask">
+                <fieldset class='fieldset'>
+                    <label for="newTask--title" class="addTask--label">Tytuł zadania</label>
+                    <input type="text" id="newTask--title" placeholder="Title" class="search" required>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <label for="newTask--description" class="addTask--label">Opis zadania</label>
+                    <textarea id="newTask--description" placeholder="Description" class="search"></textarea>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <label for="newTask--date" class="addTask--label">Data zadania</label>
+                    <input type="text" aria-autocomplete="none" name='newTaskDate' id="newTask--date" placeholder="Date" class="search" required>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <label for="newTask--time" class="addTask--label">Data zadania</label>
+                    <input type="time" name='newTaskTime' id="newTask--time" placeholder="Time" class="search" required>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <p class="addTask--label">Kategoria</p>
+                    <div class='category--radio__box'>
+                        <div><input name='Category' type="radio" id="newTask--category--home" class="category--radio" value="home"><label for="newTask--category--home"><div class="radio--btn">H</div></label></div>
+                        <div><input name='Category' type="radio" id="newTask--category--work" class="category--radio" value="work"><label for="newTask--category--work"><div class="radio--btn">W</div></label></div>
+                        <div><input name='Category' type="radio" id="newTask--category--school" class="category--radio" value="school"><label for="newTask--category--school"><div class="radio--btn">S</div></label></div>
+                        <div><input name='Category' type="radio" id="newTask--category--car" class="category--radio" value="car"><label for="newTask--category--car"><div class="radio--btn">C</div></label></div>
+                        <div><input name='Category' type="radio" id="newTask--category--other" class="category--radio" value="other"><label for="newTask--category--other"><div class="radio--btn">O</div></label></div>
+                    </div>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <label for="newTask--priority" class="addTask--label">Priorytet</label>
+                    <select name='newTaskDate' id="newTask--priority" placeholder="Priority" class="search" required>
+                        <option value="normal">Normalne</option>
+                        <option value="important">Ważne</option>
+                        <option value="v-important">Bardzo ważne</option>
+                    </select>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <button type="button" class='addTask--submit'>Dodaj</button>
+                </fieldset>
+            </form>
+        </div>
     </section>
 
     <div class='popup__box center'>
