@@ -228,7 +228,9 @@ let taskArr = [];
 function loadTasks(){
     taskArr = [];
     const taskStorage = JSON.parse(localStorage.getItem("tasks"));
-    createTaskObjects(taskStorage);
+    
+    if(taskStorage)
+      createTaskObjects(taskStorage);
 };
 loadTasks();
 
