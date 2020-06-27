@@ -95,8 +95,11 @@ function deletePopup(text, el) {
   popupBtnYes.addEventListener('click', ()=>{
     togglePopup(popupBox);
     deleteTask(el.id);
+    popupBtnYes.removeEventListener('click', ()=>{
+      togglePopup(popupBox);
+      deleteTask(el.id);
+    });
   });
-
   popupText.innerHTML = text;
 }
 
@@ -229,7 +232,7 @@ function loadTasks(){
     taskArr = [];
     const taskStorage = JSON.parse(localStorage.getItem("tasks"));
     
-    if(taskStorage)
+    if(taskStorage!=undefined)
       createTaskObjects(taskStorage);
 };
 loadTasks();
