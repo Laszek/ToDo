@@ -31,7 +31,7 @@
                 <li class="nav-item"><button class='menu__btn graph'>Widok grafiku</button></li>
                 <li class="nav-item"><form role="search">
                     <label for="search" class='menu__btn'>Szukaj</label><br>
-                    <input type="search" id="search" class="search" placeholder="tytuł/data(dd-mm-rrrr)" aria-label="Search through site content"><button class="menu__btn search-btn">-></button>
+                    <input type="search" id="search" class="search" placeholder="tytuł" aria-label="Search through site content"><button class="menu__btn search-btn">-></button>
                 </form></li>
             </ul>
 
@@ -52,6 +52,7 @@
         <main class="main">
             <section class="active-tasks">
                 <h2 class="active-tasks__title">aktywne <span class="current-date">dzisiaj</span></h2>
+                <p class="no-tasks-info"></p>
             </section>
             <section class="done-tasks">
                 <h2 class="done-tasks__title">Zrobione <span class="current-date">dzisiaj</span></h2>
@@ -68,19 +69,19 @@
             <form name="addTask" class="addTask">
                 <fieldset class='fieldset'>
                     <label for="newTask--title" class="addTask--label">Tytuł zadania</label>
-                    <input type="text" id="newTask--title" placeholder="Title" class="search" required>
+                    <input type="text" id="newTask--title" placeholder="Dodaj tytuł" class="search" required>
                 </fieldset>
                 <fieldset class='fieldset'>
                     <label for="newTask--description" class="addTask--label">Opis zadania</label>
-                    <textarea id="newTask--description" placeholder="Description" class="search"></textarea>
+                    <textarea id="newTask--description" placeholder="Dodaj opis" class="search"></textarea>
                 </fieldset>
                 <fieldset class='fieldset'>
                     <label for="newTask--date" class="addTask--label">Data zadania</label>
-                    <input type="text" aria-autocomplete="none" name='newTaskDate' id="newTask--date" placeholder="Date" class="search" required>
+                    <input type="text" aria-autocomplete="none" name='newTaskDate' id="newTask--date" placeholder="Data" class="search" required>
                 </fieldset>
                 <fieldset class='fieldset'>
-                    <label for="newTask--time" class="addTask--label">Data zadania</label>
-                    <input type="time" name='newTaskTime' id="newTask--time" placeholder="Time" class="search" required>
+                    <label for="newTask--time" class="addTask--label">Godzina</label>
+                    <input type="time" name='newTaskTime' id="newTask--time" class="search" required>
                 </fieldset>
                 <fieldset class='fieldset'>
                     <p class="addTask--label">Kategoria</p>
@@ -94,7 +95,7 @@
                 </fieldset>
                 <fieldset class='fieldset'>
                     <label for="newTask--priority" class="addTask--label">Priorytet</label>
-                    <select name='newTaskDate' id="newTask--priority" placeholder="Priority" class="search" required>
+                    <select name='newTaskDate' id="newTask--priority" class="search" required>
                         <option value="normal">Normalne</option>
                         <option value="important">Ważne</option>
                         <option value="v-important">Bardzo ważne</option>
@@ -110,11 +111,10 @@
     <div class='popup__box center'>
         <div class="popup__frame center">
             <p class="popup__text">
-                Czy na pewno chcesz usunąć zadanie?
             </p>
             <fieldset class='popup__buttons'>
-                <button class='menu__btn btn--yes'>Tak</button>
-                <button class='menu__btn btn--no'>Nie</button>
+                <button class='menu__btn btn--yes'></button>
+                <button class='menu__btn btn--no'>Anuluj</button>
             </fieldset>
         </div>
     </div>

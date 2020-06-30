@@ -48,6 +48,7 @@ window.requestAnimationFrame(showTextTime);
 //------------------------------------
 
 //Datepicker elements
+
 const today = new Date();
 const todayText = `${lz(today.getDate())}.${lz((today.getMonth()+1))}.${today.getFullYear()}`;
 
@@ -55,6 +56,7 @@ const newTaskDate = document.querySelector('#newTask--date');
 const newTaskDatepicker = new Datepicker(newTaskDate);
 newTaskDatepicker.setOptions({format: "dd.mm.yyyy"});
 newTaskDatepicker.setOptions({minDate: todayText});
+
 
 const filterDate = document.querySelector(".filter--date");
 filterDate.value = todayText;
@@ -78,7 +80,7 @@ filterDate.addEventListener('change', ()=>filterByDate(filterDate.value));
 
 
 const popupText = document.querySelector(".popup__text");
-const popupBtnYes = document.querySelector(".menu__btn.btn--yes");
+let popupBtnYes = document.querySelector(".menu__btn.btn--yes");
 const popupBtnNo = document.querySelector(".menu__btn.btn--no");
 const popupBox = document.querySelector(".popup__box");
 popupBtnNo.addEventListener('click', ()=>{
@@ -88,19 +90,92 @@ popupBtnNo.addEventListener('click', ()=>{
   //togglePopup(popupBox);
 //});
 
-function deletePopup(text, el) {
+function editPopup(el){
+  togglePopup(popupBox);
+  console.log(el);
+
+  popupBtnYes.innerHTML = "Potwierdź";
+  popupText.innerHTML = `
+          <div class="form__container">
+          Edycja:
+            <form name="editTask" class="editTask">
+                <fieldset class='fieldset'>
+                    <label for="editTask--title" class="addTask--label">Tytuł zadania</label>
+                    <input type="text" id="editTask--title" placeholder="Title" class="search" required>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <label for="editTask--description" class="addTask--label">Opis zadania</label>
+                    <textarea id="editTask--description" placeholder="Description" class="search"></textarea>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <label for="editTask--date" class="addTask--label">Data zadania</label>
+                    <input type="text" aria-autocomplete="none" name='editTaskDate' id="editTask--date" placeholder="Date" class="search" required>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <label for="editTask--time" class="addTask--label">Godzina</label>
+                    <input type="time" name='editTaskTime' id="editTask--time" placeholder="Time" class="search" required>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <p class="addTask--label">Kategoria</p>
+                    <div class='category--radio__box'>
+                        <div><input name='Category' type="radio" id="editTask--category--home" class="edit-category--radio" value="home"><label for="editTask--category--home"><div class="radio--btn">H</div></label></div>
+                        <div><input name='Category' type="radio" id="editTask--category--work" class="edit-category--radio" value="work"><label for="editTask--category--work"><div class="radio--btn">W</div></label></div>
+                        <div><input name='Category' type="radio" id="editTask--category--school" class="edit-category--radio" value="school"><label for="editTask--category--school"><div class="radio--btn">S</div></label></div>
+                        <div><input name='Category' type="radio" id="editTask--category--car" class="edit-category--radio" value="car"><label for="editTask--category--car"><div class="radio--btn">C</div></label></div>
+                        <div><input name='Category' type="radio" id="editTask--category--other" class="edit-category--radio" value="other"><label for="editTask--category--other"><div class="radio--btn">O</div></label></div>
+                    </div>
+                </fieldset>
+                <fieldset class='fieldset'>
+                    <label for="editTask--priority" class="addTask--label">Priorytet</label>
+                    <select name='editTaskDate' id="editTask--priority" placeholder="Priority" class="search" required>
+                        <option value=""></option>
+                        <option value="normal">Normalne</option>
+                        <option value="important">Ważne</option>
+                        <option value="v-important">Bardzo ważne</option>
+                    </select>
+                </fieldset>
+            </form>
+        </div>`;
+  const editTaskDate = document.querySelector('#editTask--date');
+  const editTaskDatepicker = new Datepicker(editTaskDate);
+  editTaskDatepicker.setOptions({format: "dd.mm.yyyy"});
+  editTaskDatepicker.setOptions({minDate: todayText});
+
+  popupBtnYes.addEventListener('click', ()=>{
+    restorePopupBtnYes();
+    togglePopup(popupBox);
+    const title = document.getElementById("editTask--title").value;
+    const description = document.getElementById("editTask--description").value.split("\n").join("<br>");
+    const date = document.getElementById("editTask--date").value;
+    const time = document.getElementById("editTask--time").value;
+    const category = (document.querySelector(".edit-category--radio:checked") != null) ? document.querySelector(".edit-category--radio:checked").value : "";
+    const priority = document.querySelector("#editTask--priority").value;
+   console.log(document.querySelector(".edit-category--radio:checked"), category);
+    el.editTask(title, description, date, time, category, priority);
+  });
+}
+
+function restorePopupBtnYes(){
+    const newPopupBtnYes = popupBtnYes.cloneNode(true);
+    console.log(popupBtnYes.parentNode, newPopupBtnYes);
+    popupBtnYes.parentNode.prepend(newPopupBtnYes);
+    popupBtnYes.remove();
+    popupBtnYes = newPopupBtnYes;
+}
+
+
+function deletePopup(el) {
 
   togglePopup(popupBox);
   console.log(el);
+  popupBtnYes.innerHTML = "Tak";
   popupBtnYes.addEventListener('click', ()=>{
+    restorePopupBtnYes();
+
     togglePopup(popupBox);
     deleteTask(el.id);
-    popupBtnYes.removeEventListener('click', ()=>{
-      togglePopup(popupBox);
-      deleteTask(el.id);
-    });
   });
-  popupText.innerHTML = text;
+  popupText.innerHTML = "Czy na pewno chcesz usunąć te zadanie?";
 }
 
 function togglePopup(element) {
@@ -140,11 +215,25 @@ function togglePopup(element) {
         markDoneTask();
     }
   
-    editTask(el){
-        console.log(el.id);
+    editTask(title, description, date, time, category, priority){
+      if(title != "")
+        this.title = title;
+      if(description != "")
+        this.description = description;
+      if(date != "")
+        this.date = date;  
+      if(time != "")
+        this.time = time;
+      if(category != "")
+        this.category = category;  
+      if(priority != "")
+        this.priority = priority;
+
+      updateLocalStorage();
     }
+
     deleteTaskQuestion(el){
-      deletePopup("Czy na pewno chcesz usunąć te zadanie?", el);
+      deletePopup(el);
     }
     createTask() {
   
@@ -182,20 +271,23 @@ function togglePopup(element) {
       const taskTools = document.createElement('div');
       taskTools.classList += "task__tools";
       taskContainer.append(taskTools);
-  
+
       const taskEdit = document.createElement('div');
       taskEdit.classList += "tools__edit";
       taskTools.append(taskEdit);
-  
-      const taskShowToolsBtn = document.createElement('button');
-      taskShowToolsBtn.classList += "tool show-tools fas fa-angle-right fa-2x fa-rotate-180";
-      taskShowToolsBtn.addEventListener('click', (e) => e.target.parentNode.classList.toggle("edit--active"));
-      taskEdit.append(taskShowToolsBtn);
-  
-      const taskEditBtn = document.createElement('button');
-      taskEditBtn.classList += "tool btn-edit fas fa-edit fa-2x";
-      taskEditBtn.addEventListener('click', ()=>this.editTask(this));
-      taskEdit.append(taskEditBtn);
+
+      if(this.isDone==false){
+        
+        const taskShowToolsBtn = document.createElement('button');
+        taskShowToolsBtn.classList += "tool show-tools fas fa-angle-right fa-2x fa-rotate-180";
+        taskShowToolsBtn.addEventListener('click', (e) => e.target.parentNode.classList.toggle("edit--active"));
+        taskEdit.append(taskShowToolsBtn);
+
+        const taskEditBtn = document.createElement('button');
+        taskEditBtn.classList += "tool btn-edit fas fa-edit fa-2x";
+        taskEditBtn.addEventListener('click', ()=>editPopup(this));
+        taskEdit.append(taskEditBtn);
+      }
   
       const taskDeleteBtn = document.createElement('button');
       taskDeleteBtn.classList += "tool btn-delete fas fa-trash fa-2x";
@@ -231,7 +323,7 @@ let taskArr = [];
 function loadTasks(){
     taskArr = [];
     const taskStorage = JSON.parse(localStorage.getItem("tasks"));
-    
+    console.log(taskStorage);
     if(taskStorage!=undefined)
       createTaskObjects(taskStorage);
 };
@@ -251,9 +343,19 @@ function createTaskObjects(arr){
 function loadTasksOnScreen(arr){
     const allTaskCards = document.querySelectorAll(".task__card");
     
+    
     for(let el of allTaskCards){
-        el.remove();
+      el.remove();
     }
+    const info = document.querySelector(".no-tasks-info");
+    
+    const activeTasks= arr.filter((task)=>{
+      return task.isDone==false;
+    })
+    if(activeTasks.length == 0)
+      info.innerHTML = "Nie masz żadnych zadań";
+    else
+      info.innerHTML = "";
 
     const newTaskArr = arr.sort((a, b)=>{
       let aSplit = a.time.split(":");
@@ -314,12 +416,12 @@ function addNewTask() {
     
     taskArr.push(task);
     updateLocalStorage();
+    handleClick(addBtn, addForm);
 }
 
 const addNewTaskBtn = document.querySelector(".addTask--submit");
 addNewTaskBtn.addEventListener('click', ()=>{
   addNewTask();
-  handleClick(addBtn, addForm);
 });
 
 //Marking up done tasks
@@ -351,6 +453,18 @@ function filterByDate(date) {
   } else {
     headingDate.forEach((el)=>el.innerHTML=date);
   }
+}
+
+function filterByTitle(title) {
+  const filteredArr = taskArr.filter((task)=>{
+    return task.title.includes(title);
+  })
+  console.log(filteredArr);
+
+  const filterBox = document.createElement("div");
+  filterBox.classList+="filter-box";
+  filterBox.innerHTML = `<h2>Wyszukania dla: "${title}"`;
+  document.body.appendChild(filterBox);
 }
 
 console.log(taskArr);
