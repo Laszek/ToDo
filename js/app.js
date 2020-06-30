@@ -57,7 +57,7 @@ const newTaskDatepicker = new Datepicker(newTaskDate);
 newTaskDatepicker.setOptions({format: "dd.mm.yyyy"});
 newTaskDatepicker.setOptions({minDate: todayText});
 
-
+//filters
 const filterDate = document.querySelector(".filter--date");
 filterDate.value = todayText;
 const filterDatepicker = new Datepicker(filterDate);
@@ -68,14 +68,25 @@ filterDatepicker.setOptions({
 });
 filterDate.addEventListener('change', ()=>filterByDate(filterDate.value));
 
+let isFiltered = false;
 
+const searchInput = document.querySelector("#search");
+const searchInputSubmit = document.querySelector(".search-btn");
+let searchedTitle = "";
+searchInputSubmit.addEventListener('click', ()=>{
+  if(searchInput.value != ""){
+    searchedTitle = searchInput.value;
+    filterByTitle(searchedTitle);
+    handleClick(hamburger, nav);
+  } else 
+    alert("Nie można wyszukać pustej frazy!");
+});
 
 //------------------------------------
 
-//Time selection
+//Filter check
 
   
-
 //--------------
 
 
@@ -235,8 +246,8 @@ function togglePopup(element) {
     deleteTaskQuestion(el){
       deletePopup(el);
     }
-    createTask() {
-  
+    createTask(filter) {
+      
       const taskContainer = document.createElement('div');
       taskContainer.classList += "task__card " + this.priority;
   
@@ -305,13 +316,20 @@ function togglePopup(element) {
       taskCheck.append(taskCheckBtn);
   
       let main;
-  
-      if(this.isDone == true){
-        taskContainer.classList += " done";
-        main = document.getElementsByClassName("done-tasks")[0];
-      }else
-        main = document.getElementsByClassName("active-tasks")[0];
-  
+      if(isFiltered == false){
+        if(this.isDone == true){
+          taskContainer.classList += " done";
+          main = document.getElementsByClassName("done-tasks")[0];
+        } else
+          main = document.getElementsByClassName("active-tasks")[0];
+      } else {
+        if(this.isDone == true){
+          taskContainer.classList += " done";
+          main = document.getElementsByClassName("done-tasks__filter")[0];
+        }else
+          main = document.getElementsByClassName("active-tasks__filter")[0];
+      }
+
       main.append(taskContainer);
     };
   }
@@ -337,7 +355,10 @@ function createTaskObjects(arr){
         taskEl.isDone = task.isDone;
         taskArr.push(taskEl);
     }
-    filterByDate(filterDate.value);
+    if(isFiltered == false)
+      filterByDate(filterDate.value);
+    else
+      filterByTitle(searchedTitle);
 }
 
 function loadTasksOnScreen(arr){
@@ -456,15 +477,38 @@ function filterByDate(date) {
 }
 
 function filterByTitle(title) {
+
   const filteredArr = taskArr.filter((task)=>{
     return task.title.includes(title);
   })
   console.log(filteredArr);
 
+  if(isFiltered==true){
+    loadTasksOnScreen(filteredArr);
+  } else{
   const filterBox = document.createElement("div");
   filterBox.classList+="filter-box";
-  filterBox.innerHTML = `<h2>Wyszukania dla: "${title}"`;
+  filterBox.innerHTML = `<div class="filter__header"><button name="back" class="menu__btn back-btn"><- Powrót</button><h2>Wyszukania dla: "${title}"</h2></div>`;
+  filterBox.innerHTML += `
+  <section class="active-tasks__filter">
+    <h3 class="active-tasks__title">aktywne</h3>
+    <p class="no-tasks-info"></p>
+  </section>
+  <section class="done-tasks__filter">
+   <h3 class="done-tasks__title">Zrobione</h3>
+  </section>`;
   document.body.appendChild(filterBox);
+  
+  isFiltered = true;
+  loadTasksOnScreen(filteredArr);
+
+    const backBtn = document.querySelector(".back-btn");
+    backBtn.addEventListener('click', ()=>{
+      isFiltered = false;
+      filterByDate(todayText);
+      filterBox.remove();
+    })
+  }
 }
 
 console.log(taskArr);
