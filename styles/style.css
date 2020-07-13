@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Quicksand:wght@400;700&family=Righteous&display=swap");
 :root {
   --background: #fff;
@@ -347,6 +348,7 @@ h1 {
   text-shadow: 1px 1px 10px #414141; }
 
 .filter--date {
+  position: relative;
   background: none;
   border: 0;
   border-bottom: 1px solid white;
@@ -356,6 +358,16 @@ h1 {
   color: white;
   font-weight: bold;
   text-shadow: 1px 1px 10px #414141; }
+
+.header__title::after {
+  content: "Kliknij by zmienić";
+  position: absolute;
+  bottom: 0;
+  right: calc(50% - 5em);
+  width: 10em;
+  height: 2em;
+  z-index: 999;
+  font-size: 1rem; }
 
 .main {
   max-height: 80vh;
