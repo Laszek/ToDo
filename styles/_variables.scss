@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Quicksand:wght@400;700&family=Righteous&display=swap');
 
+:root{
+    --background: #fff;
+    --background-image: url(../backgrounds/mountain.jpg);
+    --font-color: rgb(65, 65, 65);
+    
+}
+
 
 $color-grey: rgb(65, 65, 65);
 $color-white: #fff;
@@ -9,9 +16,13 @@ $color-check: rgb(87, 255, 95);
 $color-delete: rgb(255, 89, 89);
 $color-edit: rgb(255, 195, 67);
 
+$color-background: var(--background);
+
 $font-date: "Quicksand";
 $font-main: "Lato";
 $font-page-title: "Righteous";
+
+$main-background: var(--background-image);
 
 @mixin center() {
     display:flex;

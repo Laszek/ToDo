@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Quicksand:wght@400;700&family=Righteous&display=swap");
+:root {
+  --background: #fff;
+  --background-image: url(../backgrounds/mountain.jpg);
+  --font-color: rgb(65, 65, 65); }
+
 .menu, .new-form {
   position: absolute;
   top: 0;
@@ -230,6 +235,9 @@ html {
   overflow: hidden;
   width: 100vw; }
 
+body {
+  background: var(--background); }
+
 *,
 *::after,
 *::before {
@@ -299,7 +307,7 @@ h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url(../backgrounds/mountain.jpg);
+  background-image: var(--background-image);
   background-position: bottom;
   background-size: cover;
   background-repeat: no-repeat;
@@ -354,6 +362,7 @@ h1 {
   width: 100%;
   overflow-y: auto;
   padding: 1em;
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -366,11 +375,18 @@ h1 {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
-          flex-direction: column; }
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start; }
 
 .active-tasks, .done-tasks, .active-tasks__filter, .done-tasks__filter {
   width: 100%;
   max-width: 1000px; }
+
+.active-tasks {
+  height: auto;
+  position: relative; }
 
 .active-tasks__title, .done-tasks__title {
   border-bottom: 1px solid #414141;
@@ -604,8 +620,8 @@ h1 {
 
 .hideCont {
   position: absolute;
-  height: 100vh;
-  width: 100vw;
+  height: 120vh;
+  width: 120vw;
   display: none; }
 
 .btn-add .hideCont {
@@ -613,8 +629,8 @@ h1 {
   left: 0; }
 
 .hamburger .hideCont {
-  top: 0;
-  right: 0; }
+  top: -2em;
+  right: -1em; }
 
 .hideCont:focus {
   outline: 0px; }
@@ -745,11 +761,12 @@ h1 {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  overflow-y: auto; }
+  overflow-y: auto;
+  padding: 0.2em; }
 
 .filter__header {
   position: relative;
-  padding: 2em;
+  padding: 1em;
   width: 100%;
   max-width: 1000px;
   display: -webkit-box;
@@ -769,6 +786,7 @@ h1 {
 .back-btn {
   position: absolute;
   left: 0;
+  top: 0;
   text-decoration: underline; }
 
 /*# sourceMappingURL=style.css.map */

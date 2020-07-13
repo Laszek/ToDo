@@ -20,10 +20,29 @@ addBtn.addEventListener('click', () => handleClick(addBtn, addForm));
 //Menu listeners
   const menuAddTaskBtn = document.querySelector(".nav-item .add");
   menuAddTaskBtn.addEventListener('click', () => {
-    handleClick(hamburger, nav)
+    handleClick(hamburger, nav);
     handleClick(addBtn, addForm);
     });
+
+  const menuShowAllTasksBtn = document.querySelector(".all-tasks");
+  menuShowAllTasksBtn.addEventListener('click', ()=>{
+    filterByTitle("");
+    handleClick(hamburger, nav);
+  });
 //-----------------
+
+//Datepicker elements
+
+const today = new Date();
+const todayText = `${lz(today.getDate())}.${lz((today.getMonth()+1))}.${today.getFullYear()}`;
+
+const newTaskDate = document.querySelector('#newTask--date');
+const newTaskDatepicker = new Datepicker(newTaskDate);
+newTaskDatepicker.setOptions({format: "dd.mm.yyyy"});
+newTaskDatepicker.setOptions({minDate: todayText});
+
+//-----------------
+
 //Setting up time
 
 function lz(i) {
@@ -47,48 +66,9 @@ window.requestAnimationFrame(showTextTime);
 
 //------------------------------------
 
-//Datepicker elements
 
-const today = new Date();
-const todayText = `${lz(today.getDate())}.${lz((today.getMonth()+1))}.${today.getFullYear()}`;
 
-const newTaskDate = document.querySelector('#newTask--date');
-const newTaskDatepicker = new Datepicker(newTaskDate);
-newTaskDatepicker.setOptions({format: "dd.mm.yyyy"});
-newTaskDatepicker.setOptions({minDate: todayText});
-
-//filters
-const filterDate = document.querySelector(".filter--date");
-filterDate.value = todayText;
-const filterDatepicker = new Datepicker(filterDate);
-filterDatepicker.setOptions({
-  format: "dd.mm.yyyy",
-  todayHighlight: true,
-  disableTouchKeyboard: true,
-});
-filterDate.addEventListener('change', ()=>filterByDate(filterDate.value));
-
-let isFiltered = false;
-
-const searchInput = document.querySelector("#search");
-const searchInputSubmit = document.querySelector(".search-btn");
-let searchedTitle = "";
-searchInputSubmit.addEventListener('click', ()=>{
-  if(searchInput.value != ""){
-    searchedTitle = searchInput.value;
-    filterByTitle(searchedTitle);
-    handleClick(hamburger, nav);
-  } else 
-    alert("Nie można wyszukać pustej frazy!");
-});
-
-//------------------------------------
-
-//Filter check
-
-  
-//--------------
-
+//Popups
 
 const popupText = document.querySelector(".popup__text");
 let popupBtnYes = document.querySelector(".menu__btn.btn--yes");
@@ -97,13 +77,16 @@ const popupBox = document.querySelector(".popup__box");
 popupBtnNo.addEventListener('click', ()=>{
   togglePopup(popupBox);
 });
-//popupBtnYes.addEventListener('click', ()=>{
-  //togglePopup(popupBox);
-//});
+
+function restorePopupBtnYes(){
+  const newPopupBtnYes = popupBtnYes.cloneNode(true);
+  popupBtnYes.parentNode.prepend(newPopupBtnYes);
+  popupBtnYes.remove();
+  popupBtnYes = newPopupBtnYes;
+}
 
 function editPopup(el){
   togglePopup(popupBox);
-  console.log(el);
 
   popupBtnYes.innerHTML = "Potwierdź";
   popupText.innerHTML = `
@@ -112,19 +95,19 @@ function editPopup(el){
             <form name="editTask" class="editTask">
                 <fieldset class='fieldset'>
                     <label for="editTask--title" class="addTask--label">Tytuł zadania</label>
-                    <input type="text" id="editTask--title" placeholder="Title" class="search" required>
+                    <input type="text" id="editTask--title" class="search" required value="${el.title}">
                 </fieldset>
                 <fieldset class='fieldset'>
                     <label for="editTask--description" class="addTask--label">Opis zadania</label>
-                    <textarea id="editTask--description" placeholder="Description" class="search"></textarea>
+                    <textarea id="editTask--description" class="search">${el.description}</textarea>
                 </fieldset>
                 <fieldset class='fieldset'>
                     <label for="editTask--date" class="addTask--label">Data zadania</label>
-                    <input type="text" aria-autocomplete="none" name='editTaskDate' id="editTask--date" placeholder="Date" class="search" required>
+                    <input type="text" aria-autocomplete="none" name='editTaskDate' id="editTask--date" value="${el.date}" class="search" required>
                 </fieldset>
                 <fieldset class='fieldset'>
                     <label for="editTask--time" class="addTask--label">Godzina</label>
-                    <input type="time" name='editTaskTime' id="editTask--time" placeholder="Time" class="search" required>
+                    <input type="time" name='editTaskTime' id="editTask--time" value="${el.time}" class="search" required>
                 </fieldset>
                 <fieldset class='fieldset'>
                     <p class="addTask--label">Kategoria</p>
@@ -138,7 +121,7 @@ function editPopup(el){
                 </fieldset>
                 <fieldset class='fieldset'>
                     <label for="editTask--priority" class="addTask--label">Priorytet</label>
-                    <select name='editTaskDate' id="editTask--priority" placeholder="Priority" class="search" required>
+                    <select name='editTaskDate' id="editTask--priority" class="search" required>
                         <option value=""></option>
                         <option value="normal">Normalne</option>
                         <option value="important">Ważne</option>
@@ -161,24 +144,14 @@ function editPopup(el){
     const time = document.getElementById("editTask--time").value;
     const category = (document.querySelector(".edit-category--radio:checked") != null) ? document.querySelector(".edit-category--radio:checked").value : "";
     const priority = document.querySelector("#editTask--priority").value;
-   console.log(document.querySelector(".edit-category--radio:checked"), category);
     el.editTask(title, description, date, time, category, priority);
   });
-}
-
-function restorePopupBtnYes(){
-    const newPopupBtnYes = popupBtnYes.cloneNode(true);
-    console.log(popupBtnYes.parentNode, newPopupBtnYes);
-    popupBtnYes.parentNode.prepend(newPopupBtnYes);
-    popupBtnYes.remove();
-    popupBtnYes = newPopupBtnYes;
 }
 
 
 function deletePopup(el) {
 
   togglePopup(popupBox);
-  console.log(el);
   popupBtnYes.innerHTML = "Tak";
   popupBtnYes.addEventListener('click', ()=>{
     restorePopupBtnYes();
@@ -188,6 +161,27 @@ function deletePopup(el) {
   });
   popupText.innerHTML = "Czy na pewno chcesz usunąć te zadanie?";
 }
+
+function settingsPopup() {
+  togglePopup(popupBox);
+  popupBtnYes.innerHTML = "Wyjdź";
+  popupBtnNo.style.display = "none";
+  popupBtnYes.addEventListener('click', ()=>{
+    restorePopupBtnYes();
+
+    togglePopup(popupBox);
+    popupBtnNo.style.display = "inline-block";
+  });
+  popupText.innerHTML = `<h2>Ustawienia:</h2><br>
+    <button class="reset-btn">Zresetuj GTD</button>
+  `;
+
+  const resetLSBtn = document.querySelector(".reset-btn");
+  resetLSBtn.addEventListener('click', resetLocalStorage);
+}
+
+const settingsBtn = document.querySelector(".settings");
+settingsBtn.addEventListener('click', settingsPopup);
 
 function togglePopup(element) {
   element.classList.toggle("popup__box--active");
@@ -266,7 +260,7 @@ function togglePopup(element) {
   
       const taskTime = document.createElement('div');
       taskTime.classList += "task__time";
-      taskTime.innerHTML = this.time;
+      taskTime.innerHTML = this.time + ", " + this.date;
       taskContent.append(taskTime);
   
       const taskName = document.createElement('h3');
@@ -338,69 +332,181 @@ Task.counter = 0;
 
 let taskArr = [];
 
-function loadTasks(){
-    taskArr = [];
-    const taskStorage = JSON.parse(localStorage.getItem("tasks"));
-    console.log(taskStorage);
-    if(taskStorage!=undefined)
-      createTaskObjects(taskStorage);
-};
-loadTasks();
+function sortTasksByTime(arr) {
+  const newTaskArr = arr.sort((a, b)=>{
+    let aSplit = a.time.split(":");
+    let bSplit = b.time.split(":");
 
-function createTaskObjects(arr){
-    for(let task of arr){
-        let taskEl = new Task(task.title, task.description, task.time, task.date);
-        taskEl.setCategory(task.category);
-        taskEl.setPriority(task.priority);
-        taskEl.isDone = task.isDone;
-        taskArr.push(taskEl);
-    }
-    if(isFiltered == false)
-      filterByDate(filterDate.value);
-    else
-      filterByTitle(searchedTitle);
+    if(aSplit[0] < bSplit[0])
+      return -1;
+    if(aSplit[0] > bSplit[0])
+      return 1;
+
+    if(aSplit[1]<bSplit[1])
+      return -1;
+    if(aSplit[1]>bSplit[1])
+      return 1
+
+    return 0;
+  });
+
+  return newTaskArr;
+}
+
+function sortTasksByDate(arr) {
+  const newTaskArr = arr.sort((a, b)=>{
+    let aSplit = a.date.split(".");
+    let bSplit = b.date.split(".");
+
+    if(aSplit[2] < bSplit[2])
+      return -1;
+    if(aSplit[2] > bSplit[2])
+      return 1;
+
+    if(aSplit[1]<bSplit[1])
+      return -1;
+    if(aSplit[1]>bSplit[1])
+      return 1
+
+    if(aSplit[0]<bSplit[0])
+      return -1;
+    if(aSplit[0]>bSplit[0])
+      return 1
+
+    return 0;
+  });
+
+  return newTaskArr;
 }
 
 function loadTasksOnScreen(arr){
-    const allTaskCards = document.querySelectorAll(".task__card");
-    
-    
-    for(let el of allTaskCards){
-      el.remove();
-    }
-    const info = document.querySelector(".no-tasks-info");
-    
-    const activeTasks= arr.filter((task)=>{
-      return task.isDone==false;
-    })
-    if(activeTasks.length == 0)
-      info.innerHTML = "Nie masz żadnych zadań";
-    else
-      info.innerHTML = "";
+  const allTaskCards = document.querySelectorAll(".task__card");
+  
+  for(let el of allTaskCards){
+    el.remove();
+  }
+  const info = document.querySelector(".no-tasks-info");
+  
+  const activeTasks= arr.filter((task)=>{
+    return task.isDone==false;
+  });
 
-    const newTaskArr = arr.sort((a, b)=>{
-      let aSplit = a.time.split(":");
-      let bSplit = b.time.split(":");
+  if(activeTasks.length < 1)
+    info.innerHTML="Nie ma żadnych zadań"
+  else
+    info.innerHTML=""
 
-      if(aSplit[0] < bSplit[0])
-        return -1;
-      if(aSplit[0] > bSplit[0])
-        return 1;
+  let sortedByTime = sortTasksByTime(arr);
+  newTaskArr = sortTasksByDate(sortedByTime);
 
-      if(aSplit[1]<bSplit[1])
-        return -1;
-      if(aSplit[1]>bSplit[1])
-        return 1
-
-      return 0;
-    });
-
-    newTaskArr.forEach((task)=>{
-        task.createTask();
-    });
-    
-    markDoneTask();
+  newTaskArr.forEach((task)=>{
+      task.createTask();
+  });
+  
+  markDoneTask();
 }
+
+//filters
+let isFiltered = false;
+let searchedTitle = "";
+
+function filterByDate(date) {
+  const filteredArr = taskArr.filter((task)=>{
+    return task.date == date;
+  });
+  loadTasksOnScreen(filteredArr);
+
+  const headingDate = document.querySelectorAll(".current-date");
+
+  if(todayText == date){
+    headingDate.forEach((el)=>el.innerHTML="dzisiaj");
+  } else {
+    headingDate.forEach((el)=>el.innerHTML=date);
+  }
+}
+
+function filterByTitle(title) {
+
+  const filteredArr = taskArr.filter((task)=>{
+    return task.title.includes(title);
+  });
+
+  if(isFiltered==true){
+    loadTasksOnScreen(filteredArr);
+  } else{
+  const filterBox = document.createElement("div");
+  filterBox.classList+="filter-box";
+  if(title == "")
+    filterBox.innerHTML = `<div class="filter__header"><button name="back" class="menu__btn back-btn"><- Powrót</button><h2>Wszystkie zadania:</h2></div>`;
+  else
+    filterBox.innerHTML = `<div class="filter__header"><button name="back" class="menu__btn back-btn"><- Powrót</button><h2>Wyszukania dla: "${title}"</h2></div>`;
+  filterBox.innerHTML += `
+  <section class="active-tasks__filter">
+    <h3 class="active-tasks__title">aktywne</h3>
+    <p class="no-tasks-info"></p>
+  </section>
+  <section class="done-tasks__filter">
+   <h3 class="done-tasks__title">Zrobione</h3>
+  </section>`;
+  document.body.appendChild(filterBox);
+  
+  isFiltered = true;
+  loadTasksOnScreen(filteredArr);
+
+    const backBtn = document.querySelector(".back-btn");
+    backBtn.addEventListener('click', ()=>{
+      isFiltered = false;
+      filterByDate(filterDate.value);
+      filterBox.remove();
+    })
+  }
+}
+
+
+const filterDate = document.querySelector(".filter--date");
+filterDate.value = todayText;
+const filterDatepicker = new Datepicker(filterDate);
+filterDatepicker.setOptions({
+  format: "dd.mm.yyyy",
+  todayHighlight: true,
+  disableTouchKeyboard: true,
+});
+filterDate.addEventListener('change', ()=>filterByDate(filterDate.value));
+
+const searchInput = document.querySelector("#search");
+const searchInputSubmit = document.querySelector(".search-btn");
+searchInputSubmit.addEventListener('click', ()=>{
+  if(searchInput.value != ""){
+    searchedTitle = searchInput.value;
+    filterByTitle(searchedTitle);
+    handleClick(hamburger, nav);
+  } else 
+    alert("Nie można wyszukać pustej frazy!");
+});
+
+//------------------------------------
+
+function createTaskObjects(arr){
+  for(let task of arr){
+      let taskEl = new Task(task.title, task.description, task.time, task.date);
+      taskEl.setCategory(task.category);
+      taskEl.setPriority(task.priority);
+      taskEl.isDone = task.isDone;
+      taskArr.push(taskEl);
+  }
+  if(isFiltered == false)
+    filterByDate(filterDate.value);
+  else
+    filterByTitle(searchedTitle);
+}
+
+function loadTasks(){
+    taskArr = [];
+    const taskStorage = JSON.parse(localStorage.getItem("tasks"));
+    if(taskStorage!=undefined)
+      createTaskObjects(taskStorage);
+};
+
 
 function deleteTask(taskID) {
     const newTaskArr = taskArr.filter((el)=>{
@@ -461,54 +567,33 @@ function markDoneTask(){
 }
 markDoneTask();
 
-function filterByDate(date) {
-  const filteredArr = taskArr.filter((task)=>{
-    return task.date == date;
-  });
-  loadTasksOnScreen(filteredArr);
 
-  const headingDate = document.querySelectorAll(".current-date");
 
-  if(todayText == date){
-    headingDate.forEach((el)=>el.innerHTML="dzisiaj");
-  } else {
-    headingDate.forEach((el)=>el.innerHTML=date);
+//function changeSettings(theme, reset){ }
+
+let root = document.documentElement;
+function changeTheme(){
+  root.style.setProperty("--background", "radial-gradient(circle, rgba(26,26,68,1) 72%, rgba(0,0,0,1) 100%)");
+  root.style.setProperty("--background-image", "url(../backgrounds/dark2.jpg)");
+}
+
+function resetLocalStorage(){
+  if(confirm("Czy na pewno chcesz usunąć wszystkie dane?")){
+    taskArr = [];
+    updateLocalStorage();
+    alert("Zresetowano GTD");
+    loadTasks();
   }
 }
 
-function filterByTitle(title) {
-
-  const filteredArr = taskArr.filter((task)=>{
-    return task.title.includes(title);
-  })
-  console.log(filteredArr);
-
-  if(isFiltered==true){
-    loadTasksOnScreen(filteredArr);
-  } else{
-  const filterBox = document.createElement("div");
-  filterBox.classList+="filter-box";
-  filterBox.innerHTML = `<div class="filter__header"><button name="back" class="menu__btn back-btn"><- Powrót</button><h2>Wyszukania dla: "${title}"</h2></div>`;
-  filterBox.innerHTML += `
-  <section class="active-tasks__filter">
-    <h3 class="active-tasks__title">aktywne</h3>
-    <p class="no-tasks-info"></p>
-  </section>
-  <section class="done-tasks__filter">
-   <h3 class="done-tasks__title">Zrobione</h3>
-  </section>`;
-  document.body.appendChild(filterBox);
-  
+/*function createScheduleView(){
   isFiltered = true;
-  loadTasksOnScreen(filteredArr);
-
-    const backBtn = document.querySelector(".back-btn");
-    backBtn.addEventListener('click', ()=>{
-      isFiltered = false;
-      filterByDate(todayText);
-      filterBox.remove();
-    })
-  }
 }
+
+const scheduleViewBtn = document.querySelector(".graph");
+scheduleViewBtn.addEventListener('click', createScheduleView);
+*/
 
 console.log(taskArr);
+
+loadTasks();
